@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Revisão Flask - routes.py</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Revisão do Projeto Flask</h1>
+    <p>Entendendo o arquivo <strong>routes.py</strong></p>
+</header>
+
+<section>
+    <h2>1️⃣ Importações</h2>
+
+    <div class="card">
+        <h3>from mercado import app</h3>
+        <p>Importa a instância principal do Flask criada no <code>__init__.py</code>.</p>
+    </div>
+
+    <div class="card">
+        <h3>render_template</h3>
+        <p>Responsável por renderizar arquivos HTML da pasta templates.</p>
+        <code>return render_template('index.html')</code>
+    </div>
+
+    <div class="card">
+        <h3>redirect e url_for</h3>
+        <p>Redireciona o usuário para outra rota de forma organizada.</p>
+        <code>return redirect(url_for('page_home'))</code>
+    </div>
+</section>
+
+<section>
+    <h2>2️⃣ Rotas</h2>
+
+    <div class="card">
+        <code>@app.route('/')</code>
+        <p>Define uma rota. Quando alguém acessa "/", executa a função abaixo.</p>
+    </div>
+
+    <div class="card">
+        <code>def page_home():</code>
+        <p>Função executada quando a rota é acessada.</p>
+    </div>
+</section>
+
+<section>
+    <h2>3️⃣ Consulta ao Banco</h2>
+
+    <div class="card">
+        <code>itens = Item.query.all()</code>
+        <p>Busca todos os registros da tabela Item.</p>
+        <p><strong>Equivalente SQL:</strong></p>
+        <code>SELECT * FROM item;</code>
+    </div>
+</section>
+
+<section>
+    <h2>4️⃣ Formulários (GET e POST)</h2>
+
+    <div class="card">
+        <code>@app.route('/cadastro', methods=['GET', 'POST'])</code>
+        <p><strong>GET:</strong> Mostrar página</p>
+        <p><strong>POST:</strong> Enviar dados</p>
+    </div>
+
+    <div class="card">
+        <code>form.validate_on_submit()</code>
+        <p>Verifica se é POST e se passou nas validações.</p>
+    </div>
+</section>
+
+<section>
+    <h2>5️⃣ Salvando no Banco</h2>
+
+    <div class="card">
+        <code>db.session.add(usuario)</code>
+        <p>Adiciona à sessão.</p>
+    </div>
+
+    <div class="card">
+        <code>db.session.commit()</code>
+        <p>Confirma e salva no banco.</p>
+    </div>
+</section>
+
+<section>
+    <h2>6️⃣ Redirecionamento</h2>
+
+    <div class="card">
+        <code>return redirect(url_for('page_home'))</code>
+        <p>Evita reenvio do formulário ao atualizar a página.</p>
+    </div>
+</section>
+
+<footer>
+    <p>Material de Revisão - Desenvolvimento Web com Flask</p>
+</footer>
+
+</body>
+</html>
