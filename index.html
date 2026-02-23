@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Revisão Flask - routes.py</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body>
 
@@ -13,92 +14,258 @@
 </header>
 
 <section>
-    <h2>1️⃣ Importações</h2>
 
-    <div class="card">
-        <h3>from mercado import app</h3>
-        <p>Importa a instância principal do Flask criada no <code>__init__.py</code>.</p>
-    </div>
+<h2>1° Passo - Importação de Bibliotecas</h2>
 
-    <div class="card">
-        <h3>render_template</h3>
-        <p>Responsável por renderizar arquivos HTML da pasta templates.</p>
-        <code>return render_template('index.html')</code>
-    </div>
+<div class="card">
+<code>from mercado import app</code>
+<p><strong>O que é?</strong><br>
+Importa a instância principal do Flask criada no arquivo <code>__init__.py</code>.</p>
 
-    <div class="card">
-        <h3>redirect e url_for</h3>
-        <p>Redireciona o usuário para outra rota de forma organizada.</p>
-        <code>return redirect(url_for('page_home'))</code>
-    </div>
+<p><strong>O que isso significa?</strong><br>
+Existe um lugar onde foi criado algo como:</p>
+
+<code>app = Flask(__name__)</code>
+
+<p>Essa variável <strong>app</strong> representa a aplicação web inteira.
+Sem ela, não conseguimos criar rotas.</p>
+</div>
+
+<div class="card">
+<code>from flask import render_template, redirect, url_for</code>
+
+<p><strong>render_template</strong><br>
+Responsável por renderizar (abrir) um arquivo HTML da pasta templates.</p>
+
+<code>return render_template('index.html')</code>
+
+<p><strong>redirect</strong><br>
+Redireciona o usuário para outra rota.</p>
+
+<code>return redirect(url_for('page_home'))</code>
+
+<p><strong>url_for</strong><br>
+Gera a URL baseada no nome da função da rota.
+Evita escrever '/' manualmente.</p>
+</div>
+
+<div class="card">
+<code>from mercado.models import Item, User</code>
+<p>Importa as classes que representam tabelas do banco.</p>
+</div>
+
+<div class="card">
+<code>from mercado.forms import CadastroForm</code>
+<p>Importa a classe do formulário (campos e validações).</p>
+</div>
+
+<div class="card">
+<code>from mercado import db</code>
+<p>Importa o banco de dados (SQLAlchemy).</p>
+<code>db = SQLAlchemy(app)</code>
+</div>
+
+<h2>2° Rotas</h2>
+
+<div class="card">
+<code>@app.route('/')</code>
+<p>Define a rota da página inicial.</p>
+
+<code>def page_home():</code>
+<p>Função executada quando a rota é acessada.</p>
+
+<code>return render_template('index.html')</code>
+<p>Envia HTML como resposta para o navegador.</p>
+</div>
+
+<h2>3° Consulta ao Banco</h2>
+
+<div class="card">
+<code>itens = Item.query.all()</code>
+<p>Busca todos os registros da tabela Item.</p>
+
+<code>SELECT * FROM item;</code>
+
+<code>return render_template('produtos.html', itens=itens)</code>
+<p>No template podemos usar:</p>
+
+<code>{% for item in itens %}</code>
+</div>
+
+<h2>4° Rota com GET e POST</h2>
+
+<div class="card">
+<code>@app.route('/cadastro', methods=['GET', 'POST'])</code>
+<p><strong>GET:</strong> Mostrar página</p>
+<p><strong>POST:</strong> Enviar dados</p>
+</div>
+
+<h2>5° Formulário</h2>
+
+<div class="card">
+<code>form = CadastroForm()</code>
+<p>Cria instância do formulário.</p>
+
+<code>if form.validate_on_submit():</code>
+<p>Verifica se foi enviado e validado.</p>
+</div>
+
+<h2>6° Criação do Objeto</h2>
+
+<div class="card">
+<code>
+usuario = User(usuario=form.usuario.data,
+email=form.email.data,
+senha=form.senha1.data)
+</code>
+<p>Ainda não está salvo no banco.</p>
+</div>
+
+<h2>7° Salvando no Banco</h2>
+
+<div class="card">
+<code>db.session.add(usuario)</code>
+<p>Adiciona à sessão.</p>
+
+<code>db.session.commit()</code>
+<p>Confirma e salva no banco.</p>
+</div>
+
+<h2>8° Redirecionamento</h2>
+
+<div class="card">
+<code>return redirect(url_for('page_home'))</code>
+<p>Evita reenvio do formulário.</p>
+
+<code>return render_template('cadastro.html', form=form)</code>
+<p>Se for GET, apenas exibe o formulário.</p>
+</div>
+
+<hr>
 </section>
 
 <section>
-    <h2>2️⃣ Rotas</h2>
+<h2> Atividade Prática</h2>
+<p>Digite exatamente o código solicitado em cada questão:</p>
 
-    <div class="card">
-        <code>@app.route('/')</code>
-        <p>Define uma rota. Quando alguém acessa "/", executa a função abaixo.</p>
-    </div>
+<div class="atividade">
 
-    <div class="card">
-        <code>def page_home():</code>
-        <p>Função executada quando a rota é acessada.</p>
-    </div>
+<!-- QUESTÕES 1 A 17 -->
+
+<div class="questao">
+<p>1 - Importar a aplicação principal</p>
+<input type="text" id="q1">
+<div id="r1" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>2 - Importar funções para renderizar, redirecionar e gerar URL</p>
+<input type="text" id="q2">
+<div id="r2" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>3 - Importar os models do banco</p>
+<input type="text" id="q3">
+<div id="r3" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>4 - Importar o formulário de cadastro</p>
+<input type="text" id="q4">
+<div id="r4" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>5 - Importar o banco de dados</p>
+<input type="text" id="q5">
+<div id="r5" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>6 - Definir a rota da página inicial</p>
+<input type="text" id="q6">
+<div id="r6" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>7 - Renderizar o template index.html</p>
+<input type="text" id="q7">
+<div id="r7" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>8 - Buscar todos os registros da tabela Item</p>
+<input type="text" id="q8">
+<div id="r8" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>9 - Enviar a variável itens para o template</p>
+<input type="text" id="q9">
+<div id="r9" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>10 - Permitir que a rota aceite GET e POST</p>
+<input type="text" id="q10">
+<div id="r10" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>11 - Instanciar o formulário</p>
+<input type="text" id="q11">
+<div id="r11" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>12 - Verificar se o formulário foi enviado e validado</p>
+<input type="text" id="q12">
+<div id="r12" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>13 - Criar objeto User com dados do formulário</p>
+<input type="text" id="q13">
+<div id="r13" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>14 - Adicionar objeto na sessão do banco</p>
+<input type="text" id="q14">
+<div id="r14" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>15 - Salvar definitivamente no banco</p>
+<input type="text" id="q15">
+<div id="r15" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>16 - Redirecionar para a página inicial</p>
+<input type="text" id="q16">
+<div id="r16" class="resultado"></div>
+</div>
+
+<div class="questao">
+<p>17 - Renderizar cadastro.html caso não seja POST válido</p>
+<input type="text" id="q17">
+<div id="r17" class="resultado"></div>
+</div>
+
+<button onclick="corrigir()">Corrigir</button>
+
+<div id="notaFinal" class="nota"></div>
+
+</div>
 </section>
 
-<section>
-    <h2>3️⃣ Consulta ao Banco</h2>
-
-    <div class="card">
-        <code>itens = Item.query.all()</code>
-        <p>Busca todos os registros da tabela Item.</p>
-        <p><strong>Equivalente SQL:</strong></p>
-        <code>SELECT * FROM item;</code>
-    </div>
-</section>
-
-<section>
-    <h2>4️⃣ Formulários (GET e POST)</h2>
-
-    <div class="card">
-        <code>@app.route('/cadastro', methods=['GET', 'POST'])</code>
-        <p><strong>GET:</strong> Mostrar página</p>
-        <p><strong>POST:</strong> Enviar dados</p>
-    </div>
-
-    <div class="card">
-        <code>form.validate_on_submit()</code>
-        <p>Verifica se é POST e se passou nas validações.</p>
-    </div>
-</section>
-
-<section>
-    <h2>5️⃣ Salvando no Banco</h2>
-
-    <div class="card">
-        <code>db.session.add(usuario)</code>
-        <p>Adiciona à sessão.</p>
-    </div>
-
-    <div class="card">
-        <code>db.session.commit()</code>
-        <p>Confirma e salva no banco.</p>
-    </div>
-</section>
-
-<section>
-    <h2>6️⃣ Redirecionamento</h2>
-
-    <div class="card">
-        <code>return redirect(url_for('page_home'))</code>
-        <p>Evita reenvio do formulário ao atualizar a página.</p>
-    </div>
-</section>
 
 <footer>
     <p>Material de Revisão - Desenvolvimento Web com Flask</p>
 </footer>
+
 
 </body>
 </html>
